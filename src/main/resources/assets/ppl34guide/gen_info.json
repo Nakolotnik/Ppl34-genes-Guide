@@ -1,0 +1,38 @@
+{
+  "genes": [
+    {
+      "label": "Рост",
+      "tooltip": "Влияет на рост игрока",
+      "levels": [
+        "Маленький (0,8 - 1,2)",
+        "Средний (1,2 - 2)",
+        "Большой (2 - 3,5)",
+        "Игрока можно доить ведром, получая молоко, не влияет на рост\n§7Возможно зависит от хаоса§r"
+      ],
+      "icon": "textures/gui/icons/growth.png",
+      "levelIcons": [
+        "textures/gui/icons/growth/1.png",
+        "textures/gui/icons/growth/2.png",
+        "textures/gui/icons/growth/3.png",
+        "textures/gui/icons/growth/4.png"
+      ]
+    },
+    {
+      "label": "Уровень здоровья",
+      "tooltip": "Влияет на количество хп",
+      "levels": [
+        "Мало",
+        "Средне. Выше регенерация?",
+        "Много. Выше регенерация?",
+        "Игрок может стричь взрослых коров получая кожу и стейки"
+      ],
+      "icon": "textures/gui/icons/hp.png",
+      "levelIcons": [
+        "textures/gui/icons/hp/1.png",
+        "textures/gui/icons/hp/2.png",
+        "textures/gui/icons/hp/3.png",
+        "textures/gui/icons/hp/4.png"
+      ]
+    }
+  ]
+}

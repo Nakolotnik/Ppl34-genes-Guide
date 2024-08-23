@@ -4,6 +4,9 @@
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 	],
+	"client": [
+		"ScreenMixin"
+	],
 	"injectors": {
 		"defaultRequire": 1
 	}

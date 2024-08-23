@@ -11,6 +11,7 @@ public class PPL34Guide implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("ppl34guide");
 	public static final String MOD_ID = "ppl34guide";
+
 	@Override
 	public void onInitialize() {
 
