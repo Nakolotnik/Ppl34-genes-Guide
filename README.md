@@ -1,2 +1,6 @@
 # Ppl34-genes-Guide
-Main information on genes from the pepeland 34 experiment
+Вся базовая информация про гены с эксперимента 34 приватного майнкрафт сервера pepeland.
+
+Для открытия окна по умолчанию стоит английская K, вы же можете поменять это в настройках
+
+[Если хотите меня поддержать](https://www.donationalerts.com/r/Nakolotnik)
