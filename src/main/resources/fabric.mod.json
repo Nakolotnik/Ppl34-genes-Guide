@@ -1,0 +1,46 @@
+{
+	"schemaVersion": 1,
+	"id": "ppl34guide",
+	"version": "${version}",
+	"name": "PPL34Guide",
+	"description": "Основная и оперативная информация по генам с эксперемента 34",
+	"authors": [
+		"Nakolotnik"
+	],
+	"contact": {
+		"homepage": "https://t.me/transcend_space"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/ppl34guide/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"nakolotnik.guide.PPL34Guide"
+		],
+		"fabric-datagen": [
+			"nakolotnik.guide.PPL34GuideDataGenerator"
+		],
+		"client": [
+			"nakolotnik.guide.client.gui.GuideClient"
+		]
+	},
+	"mixins": [
+		"ppl34guide.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.20.6",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	},
+	"custom": {
+		"modmenu": {
+			"links": {
+				"Telegram": "https://t.me/transcend_space"
+			}
+		}
+	}
+}
