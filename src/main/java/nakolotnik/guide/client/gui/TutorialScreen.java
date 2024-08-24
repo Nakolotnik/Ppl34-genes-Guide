@@ -5,6 +5,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import nakolotnik.guide.PPL34Guide;
+import nakolotnik.guide.config.ConfigInitializer;
+import nakolotnik.guide.config.ModConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -25,25 +27,37 @@ import java.util.List;
 @Environment(EnvType.CLIENT)
 public class TutorialScreen extends Screen {
     private static final int SPACING = 10; // Промежуток между кнопками
-    private static final int ICON_SIZE = 16; // Размер иконки
-    private static final int TEXT_LINE_HEIGHT = 16; // Высота строки текста
-    private static final int TEXT_LINE_SPACING = 5; // Отступ между строками текста
+
     private static final int LEFT_MARGIN = 2; // Отступ от левого края для текста и иконок
     private static final int ICON_MARGIN = 4; // Отступ между иконкой и текстом
     private static final int SCROLL_SPEED = 30; // Скорость прокрутки
-    private int textWrapLeftMargin = 20; // Переменная для контроля левого отступа
+    private static final float SCALE_SPEED = 0.1f; // Скорость анимации масштабирования
 
-    private Identifier[] levelIcons = new Identifier[0];
+    private int textWrapLeftMargin = ModConfig.textWrapLeftMargin; // Отступ для оборачивания текста
+    private int buttonWidth = ModConfig.buttonWidth; // Ширина кнопок
+    private int buttonHeight = ModConfig.buttonHeight; // Высота кнопок
+    private int cornerRadius = ModConfig.cornerRadius; // Радиус скругления
+    private int iconSize = ModConfig.iconSize; // Размер иконки
+    private int textLineHeight = ModConfig.textLineHeight; // Высота строки текста
+    private int textLineSpacing = ModConfig.textLineSpacing; // Отступ между строками текста
+//    private int textSize = ModConfig.textSize;
+
+
+    private int textSize = 12;
+
+
     private int scrollOffset = 0;
     private int contentHeight;
-    private String[] infoBoxText = new String[]{};
+    private float[] iconScales;
 
     private List<ButtonInfo> buttonInfos = new ArrayList<>();
-    private ButtonInfo hoveredButtonInfo = null;
+    private ButtonInfo selectedButtonInfo = null;
+    private String[] infoBoxText = new String[]{};
 
     protected TutorialScreen() {
         super(Text.literal("Гайд по генам"));
         loadButtonInfos();
+        iconScales = new float[buttonInfos.size()];
     }
 
     private void loadButtonInfos() {
@@ -52,7 +66,7 @@ public class TutorialScreen extends Screen {
 
             if (!configFile.exists()) {
                 System.out.println("JSON файл не найден: " + configFile.getAbsolutePath());
-                return;
+                ConfigInitializer.initializeConfig();
             }
 
             String jsonText = Files.readString(configFile.toPath(), StandardCharsets.UTF_8);
@@ -95,9 +109,7 @@ public class TutorialScreen extends Screen {
         int screenWidth = width;
         int screenHeight = height;
 
-        int buttonWidth = Math.min(screenWidth / 3, 300);
-        int buttonHeight = 30;
-
+        buttonWidth = Math.min(screenWidth / 3, 300);
         contentHeight = buttonInfos.size() * (buttonHeight + SPACING);
     }
 
@@ -136,42 +148,60 @@ public class TutorialScreen extends Screen {
         int screenWidth = width;
         int screenHeight = height;
 
-        int buttonWidth = Math.min(screenWidth / 3, 300);
-        int buttonHeight = 30;
         int infoBoxWidth = Math.min(screenWidth / 2, 460);
         int infoBoxHeight = screenHeight - 60;
 
         int startX = 20;
         int startY = 30;
-        int cornerRadius = 10;
-
-        hoveredButtonInfo = null;
 
         for (int i = 0; i < buttonInfos.size(); i++) {
             int x = startX;
             int y = startY + i * (buttonHeight + SPACING) - scrollOffset;
 
             boolean isHovered = mouseX >= x && mouseX <= x + buttonWidth && mouseY >= y && mouseY <= y + buttonHeight;
-            int backgroundColor = isHovered ? 0xAA444444 : 0xAA222222;
+            int backgroundColor = isHovered ? 0xFF666666 : 0xFF333333;
+
+            // Плавное изменение масштаба
+            float targetScale = isHovered ? 1.1f : 1.0f;
+            iconScales[i] = lerp(iconScales[i], targetScale, SCALE_SPEED);
 
             drawRoundedRectangle(context, x, y, buttonWidth, buttonHeight, cornerRadius, backgroundColor);
 
             ButtonInfo buttonInfo = buttonInfos.get(i);
-            context.drawTexture(buttonInfo.getIcon(), x + 5, y + (buttonHeight - ICON_SIZE) / 2, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+            int iconX = x + 5;
+            int iconY = y + (buttonHeight - iconSize) / 2;
+
+            int scaledIconSize = (int) (iconSize * iconScales[i]);
+
+            // Сохранение текущей матрицы
+            context.getMatrices().push();
+
+            // Перемещение и масштабирование
+            context.getMatrices().translate(iconX + (iconSize - scaledIconSize) / 2.0f, iconY + (iconSize - scaledIconSize) / 2.0f, 0);
+            context.getMatrices().scale(iconScales[i], iconScales[i], 1.0f);
+
+            // Отрисовка иконки
+            context.drawTexture(buttonInfo.getIcon(), 0, 0, 0, 0, iconSize, iconSize, iconSize, iconSize);
+
+            // Восстановление матрицы
+            context.getMatrices().pop();
 
             String labelText = buttonInfo.getLabel();
-            int textWidth = textRenderer.getWidth(labelText);
-            int textX = x + ICON_SIZE + ICON_MARGIN + (buttonWidth - ICON_SIZE - ICON_MARGIN - textWidth) / 2;
-            int textY = y + (buttonHeight - textRenderer.fontHeight) / 2;
-            context.drawText(textRenderer, Text.literal(labelText), textX, textY, 0xFFFFFFFF, false);
+            int textWidth = (int) (textRenderer.getWidth(labelText) * textSize / 12.0);
+            int textHeight = (int) (textRenderer.fontHeight * textSize / 12.0);
+
+            int textX = x + iconSize + ICON_MARGIN + (buttonWidth - iconSize - ICON_MARGIN - textWidth) / 2;
+            int textY = y + (buttonHeight - textHeight) / 2;
+            int textColor = isHovered ? 0xFFFFE0B2 : 0xFFFFFFFF;
+
+            context.getMatrices().push();
+            context.getMatrices().scale(textSize / 12.0f, textSize / 12.0f, 1.0f);
+            context.drawText(textRenderer, Text.literal(labelText), (int)(textX / (textSize / 12.0f)), (int)(textY / (textSize / 12.0f)), textColor, false);
+            context.getMatrices().pop();
 
             if (isHovered) {
-                hoveredButtonInfo = buttonInfo;
+                context.drawTooltip(textRenderer, List.of(Text.literal(buttonInfo.getTooltip())), mouseX, mouseY);
             }
-        }
-
-        if (hoveredButtonInfo != null) {
-            renderTooltip(context, hoveredButtonInfo.getTooltip(), mouseX, mouseY);
         }
 
         int infoBoxX = screenWidth - infoBoxWidth - 20;
@@ -180,35 +210,50 @@ public class TutorialScreen extends Screen {
 
         int yOffset = 0;
 
-        for (int i = 0; i < infoBoxText.length; i++) {
-            List<String> lines = wrapText(infoBoxText[i], infoBoxWidth);
-            for (int j = 0; j < lines.size(); j++) {
-                int lineY = infoBoxY + yOffset + i * (TEXT_LINE_HEIGHT + TEXT_LINE_SPACING) + j * (TEXT_LINE_HEIGHT + TEXT_LINE_SPACING);
+        if (selectedButtonInfo != null) {
+            String[] infoText = selectedButtonInfo.getInfo();
+            for (int i = 0; i < infoText.length; i++) {
+                List<String> lines = wrapText(infoText[i], infoBoxWidth);
+                for (int j = 0; j < lines.size(); j++) {
+                    int lineY = infoBoxY + yOffset + i * (textLineHeight + textLineSpacing) + j * (textLineHeight + textLineSpacing);
 
-                if (i >= 2 && i - 2 < levelIcons.length && j == 0) {
-                    int iconY = lineY + (TEXT_LINE_HEIGHT - ICON_SIZE) / 2;
-                    int textY = lineY + (TEXT_LINE_HEIGHT - textRenderer.fontHeight) / 2;
+                    if (i >= 2 && i - 2 < selectedButtonInfo.getLevelIcons().length && j == 0) {
+                        int iconY = lineY + (textLineHeight - iconSize) / 2;
+                        int textY = lineY + (textLineHeight - (int)(textRenderer.fontHeight * textSize / 12.0)) / 2;
 
-                    context.drawTexture(levelIcons[i - 2], infoBoxX + LEFT_MARGIN, iconY, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
-                    int textX = infoBoxX + LEFT_MARGIN + ICON_SIZE + ICON_MARGIN;
-                    context.drawText(textRenderer, Text.literal(lines.get(j)), textX, textY, 0xFFFFFF, false);
-                } else {
-                    context.drawText(textRenderer, Text.literal(lines.get(j)), infoBoxX + LEFT_MARGIN, lineY, 0xFFFFFF, false);
-                }
+                        context.drawTexture(selectedButtonInfo.getLevelIcons()[i - 2], infoBoxX + LEFT_MARGIN, iconY, 0, 0, iconSize, iconSize, iconSize, iconSize);
+                        int textX = infoBoxX + LEFT_MARGIN + iconSize + ICON_MARGIN;
+                        context.drawText(textRenderer, Text.literal(lines.get(j)), (int)(textX / (textSize / 12.0)), (int)(textY / (textSize / 12.0)), 0xFFFFFF, false);
+                    } else {
+                        context.drawText(textRenderer, Text.literal(lines.get(j)), (int)(infoBoxX + LEFT_MARGIN / (textSize / 12.0)), (int)(lineY / (textSize / 12.0)), 0xFFFFFF, false);
+                    }
 
-                if (j > 0) {
-                    yOffset += TEXT_LINE_SPACING;
+                    if (j > 0) {
+                        yOffset += textLineSpacing;
+                    }
                 }
             }
         }
     }
 
-    private void drawRoundedRectangle(DrawContext context, int x, int y, int width, int height, int radius, int color) {
-        context.fill(x + radius, y, x + width - radius, y + height, color);
 
+
+
+    private float lerp(float start, float end, float speed) {
+        return start + (end - start) * speed;
+    }
+
+    private void drawRoundedRectangle(DrawContext context, int x, int y, int width, int height, int radius, int color) {
+        // Ограничиваем радиус
+        int maxRadius = Math.min(width, height) / 2;
+        radius = Math.min(radius, maxRadius);
+
+        // Рисуем центральные области
+        context.fill(x + radius, y, x + width - radius, y + height, color);
         context.fill(x, y + radius, x + radius, y + height - radius, color);
         context.fill(x + width - radius, y + radius, x + width, y + height - radius, color);
 
+        // Рисуем закругленные углы
         fillQuarterCircle(context, x + radius - 1, y + radius, radius, color, Corner.TOP_LEFT);
         fillQuarterCircle(context, x + width - radius, y + radius, radius, color, Corner.TOP_RIGHT);
         fillQuarterCircle(context, x + radius - 1, y + height - radius, radius, color, Corner.BOTTOM_LEFT);
@@ -217,12 +262,17 @@ public class TutorialScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        return super.mouseClicked(mouseX, mouseY, button);
-    }
+        for (int i = 0; i < buttonInfos.size(); i++) {
+            int x = 20;
+            int y = 30 + i * (buttonHeight + SPACING) - scrollOffset;
 
-    @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        return super.mouseReleased(mouseX, mouseY, button);
+            if (mouseX >= x && mouseX <= x + buttonWidth && mouseY >= y && mouseY <= y + buttonHeight) {
+                selectedButtonInfo = buttonInfos.get(i);
+                infoBoxText = selectedButtonInfo.getInfo();
+                return true;
+            }
+        }
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
@@ -244,6 +294,7 @@ public class TutorialScreen extends Screen {
         StringBuilder currentLine = new StringBuilder();
 
         int adjustedMaxWidth = maxWidth - textWrapLeftMargin;
+        int scaledMaxWidth = (int)(adjustedMaxWidth / (textSize / 12.0f));
 
         int length = text.length();
         for (int i = 0; i < length; i++) {
@@ -258,7 +309,7 @@ public class TutorialScreen extends Screen {
             currentLine.append(c);
             String testLine = currentLine.toString();
 
-            if (textRenderer.getWidth(testLine) > adjustedMaxWidth) {
+            if (textRenderer.getWidth(testLine) * textSize / 12.0 > scaledMaxWidth) {
                 int lastSpaceIndex = testLine.lastIndexOf(' ');
                 if (lastSpaceIndex != -1) {
                     wrappedText.add(testLine.substring(0, lastSpaceIndex));
@@ -277,11 +328,8 @@ public class TutorialScreen extends Screen {
         return wrappedText;
     }
 
-    private void renderTooltip(DrawContext context, String tooltipText, int mouseX, int mouseY) {
-        List<Text> tooltip = new ArrayList<>();
-        tooltip.add(Text.literal(tooltipText));
-        context.drawTooltip(textRenderer, tooltip, mouseX, mouseY);
-    }
+
+
 
     private static class ButtonInfo {
         private final String label;

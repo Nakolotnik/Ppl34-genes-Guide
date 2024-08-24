@@ -1,4 +1,12 @@
 {
   "category.guide.keybindings": "PPL 34 гены",
-  "key.guide.open_tutorial_screen": "Открыть окно генов"
+  "key.guide.open_tutorial_screen": "Открыть окно генов",
+  "config.corner_radius": "Радиус углов: %d",
+  "config.button_width": "Ширина кнопки: %d",
+  "config.button_height": "Высота кнопки: %d",
+  "config.left_margin": "Левый отступ: %d",
+  "config.icon_size": "Размер иконки: %d",
+  "config.text_line_height": "Высота строки текста: %d",
+  "config.text_line_spacing": "Междустрочный интервал: %d",
+  "config.text_size": "Размер текста: %d"
 }

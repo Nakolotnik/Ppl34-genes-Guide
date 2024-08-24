@@ -1,5 +1,6 @@
 package nakolotnik.guide;
 
+import nakolotnik.guide.config.ModConfig;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -14,8 +15,7 @@ public class PPL34Guide implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-
-
+		ModConfig.loadConfig();
 		LOGGER.info("Hello Fabric world!");
 	}
 

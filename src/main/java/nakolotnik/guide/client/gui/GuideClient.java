@@ -12,18 +12,15 @@ public class GuideClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        // Регистрация новой клавиши с возможностью изменения в настройках
         openTutorialScreenKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.guide.open_tutorial_screen", // Идентификатор клавиши
-                InputUtil.Type.KEYSYM, // Тип ввода (клавиатура)
-                GLFW.GLFW_KEY_K, // Код клавиши по умолчанию (в данном случае K)
-                "category.guide.keybindings" // Категория клавиши (пользователь видит это в настройках)
+                "key.guide.open_tutorial_screen",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_K,
+                "category.guide.keybindings"
         ));
 
-        // Обработчик события нажатия клавиши
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (openTutorialScreenKey.wasPressed()) {
-                // Проверка, что клиент доступен и можно открыть экран
                 if (client != null) {
                     client.setScreen(new TutorialScreen());
                 }

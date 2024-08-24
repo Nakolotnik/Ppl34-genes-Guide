@@ -22,6 +22,9 @@
 		],
 		"client": [
 			"nakolotnik.guide.client.gui.GuideClient"
+		],
+		"modmenu": [
+			"nakolotnik.guide.integrations.ModMenuIntegration"
 		]
 	},
 	"mixins": [

@@ -1,4 +1,12 @@
 {
   "category.guide.keybindings": "Guide Mod Keybinds",
-  "key.guide.open_tutorial_screen": "Open guide Screen"
+  "key.guide.open_tutorial_screen": "Open guide Screen",
+  "config.corner_radius": "Corner Radius: %d",
+  "config.button_width": "Button Width: %d",
+  "config.button_height": "Button Height: %d",
+  "config.left_margin": "Left Margin: %d",
+  "config.icon_size": "Icon Size: %d",
+  "config.text_line_height": "Text Line Height: %d",
+  "config.text_line_spacing": "Text Line Spacing: %d",
+  "config.text_size": "Text Size: %d"
 }
