@@ -1,0 +1,208 @@
+{
+  "genes": [
+    {
+      "label": "Рост",
+      "tooltip": "Влияет на рост игрока",
+      "levels": [
+        "Маленький (0,8 - 1,2)",
+        "Средний (1,2 - 2)",
+        "Большой (2 - 3,5)",
+        "Игрока можно доить ведром, получая молоко, не влияет на рост\n§6Возможно зависит от хаоса§r"
+      ],
+      "icon": "textures/gui/icons/growth.png",
+      "levelIcons": [
+        "textures/gui/icons/growth/1.png",
+        "textures/gui/icons/growth/2.png",
+        "textures/gui/icons/growth/3.png",
+        "textures/gui/icons/growth/4.png"
+      ]
+    },
+    {
+      "label": "Уровень здоровья",
+      "tooltip": "Влияет на количество хп",
+      "levels": [
+        "6 - 9 сердец",
+        "10 сердец",
+        "10 - 14 сердец",
+        "Игрок может стричь взрослых коров получая кожу и стейки"
+      ],
+      "icon": "textures/gui/icons/hp.png",
+      "levelIcons": [
+        "textures/gui/icons/hp/1.png",
+        "textures/gui/icons/hp/2.png",
+        "textures/gui/icons/hp/3.png",
+        "textures/gui/icons/hp/4.png"
+      ]
+    },
+    {
+      "label": "Высота прыжка",
+      "tooltip": "Влияет на высоту прыжка",
+      "levels": [
+        "1 блок",
+        "1 - 1,5 блока",
+        "1,5 - 2 блока",
+        "Игрок, как лягушка, может получать квампы(ПКМ по Слаймам и Магма-Кубам)\n§9Зависит от роста§r"
+      ],
+      "icon": "textures/gui/icons/jump.png",
+      "levelIcons": [
+        "textures/gui/icons/jump/1.png",
+        "textures/gui/icons/jump/2.png",
+        "textures/gui/icons/jump/3.png",
+        "textures/gui/icons/jump/4.png"
+      ]
+    },
+    {
+      "label": "Скорость бега",
+      "tooltip": "Влияет на скорость бега",
+      "levels": [
+        "Низкая",
+        "Средняя",
+        "Высокая",
+        "Позволяет игроку не тратить эндер жемчуг при его броске.\n§6Возможно зависит от хаоса§r"
+      ],
+      "icon": "textures/gui/icons/run.png",
+      "levelIcons": [
+        "textures/gui/icons/run/1.png",
+        "textures/gui/icons/run/2.png",
+        "textures/gui/icons/run/3.png",
+        "textures/gui/icons/run/4.png"
+      ]
+    },
+    {
+      "label": "Дальность копания",
+      "tooltip": "Влияет на дальность копания",
+      "levels": [
+        "3 блока",
+        "5 блоков",
+        "7 блоков",
+        "Игрок может использовать верстак кликнув им по воздуху"
+      ],
+      "icon": "textures/gui/icons/minelenght.png",
+      "levelIcons": [
+        "textures/gui/icons/minelenght/1.png",
+        "textures/gui/icons/minelenght/2.png",
+        "textures/gui/icons/minelenght/3.png",
+        "textures/gui/icons/minelenght/4.png"
+      ]
+    },
+    {
+      "label": "Подъем на блок",
+      "tooltip": "Влияет на высоту подъема на блок",
+      "levels": [
+        "Нет. Не всегда?",
+        "0 - 0,7 блока",
+        "0,7 - 1 блок",
+        "Игрок становится вегетарианцем(не может есть мясо, пить молоко и т.д.)\n§9Зависит от роста§r"
+      ],
+      "icon": "textures/gui/icons/blockup.png",
+      "levelIcons": [
+        "textures/gui/icons/blockup/1.png",
+        "textures/gui/icons/blockup/2.png",
+        "textures/gui/icons/blockup/3.png",
+        "textures/gui/icons/blockup/4.png"
+      ]
+    },
+    {
+      "label": "Урон от падения",
+      "tooltip": "Влияет на уменьшение урона от падения",
+      "levels": [
+        "3,5 блока",
+        "3,5 - 5 блоков",
+        "5 - 7 блоков",
+        "Игрок может кататься на криперах и они его не атакуют\n§9Зависит от роста§r"
+      ],
+      "icon": "textures/gui/icons/falling.png",
+      "levelIcons": [
+        "textures/gui/icons/falling/1.png",
+        "textures/gui/icons/falling/2.png",
+        "textures/gui/icons/falling/3.png",
+        "textures/gui/icons/falling/4.png"
+      ]
+    },
+    {
+      "label": "Защита",
+      "tooltip": "Влияет на пассивную защиту",
+      "levels": [
+        "Низкая",
+        "Средняя",
+        "Высокая",
+        "Игрок варит случайное зелье кликнув ПКМ пустой бутылкой по воздуху (можно так же ПКМ по нему)\n§9Зависит от роста§r"
+      ],
+      "icon": "textures/gui/icons/def.png",
+      "levelIcons": [
+        "textures/gui/icons/def/1.png",
+        "textures/gui/icons/def/2.png",
+        "textures/gui/icons/def/3.png",
+        "textures/gui/icons/def/4.png"
+      ]
+    },
+    {
+      "label": "Сила",
+      "tooltip": "Влияет на урон от удара",
+      "levels": [
+        "Низкая",
+        "Средняя",
+        "Высокая",
+        "Игрок может бросаться кирпичами\n(ПКМ кирпичами по воздуху)"
+      ],
+      "icon": "textures/gui/icons/strength.png",
+      "levelIcons": [
+        "textures/gui/icons/strength/1.png",
+        "textures/gui/icons/strength/2.png",
+        "textures/gui/icons/strength/3.png",
+        "textures/gui/icons/strength/4.png"
+      ]
+    },
+    {
+      "label": "Скорость атаки",
+      "tooltip": "Влияет на скорость атаки",
+      "levels": [
+        "Низкая",
+        "Средняя",
+        "Высокая",
+        "Позволяет игроку получить 'свежие листья' ножницами"
+      ],
+      "icon": "textures/gui/icons/attackspeed.png",
+      "levelIcons": [
+        "textures/gui/icons/attackspeed/1.png",
+        "textures/gui/icons/attackspeed/2.png",
+        "textures/gui/icons/attackspeed/3.png",
+        "textures/gui/icons/attackspeed/4.png"
+      ]
+    },
+    {
+      "label": "Скорость копания",
+      "tooltip": "Влияет на скорость копания",
+      "levels": [
+        "Медленнее(на 33%)",
+        "Обычная",
+        "Быстрее(на 33%)",
+        "Только игрок с этим геном может бросать око эндера"
+      ],
+      "icon": "textures/gui/icons/haste.png",
+      "levelIcons": [
+        "textures/gui/icons/haste/1.png",
+        "textures/gui/icons/haste/2.png",
+        "textures/gui/icons/haste/3.png",
+        "textures/gui/icons/haste/4.png"
+      ]
+    },
+    {
+      "label": "Гравитация предметов",
+      "tooltip": "Влияет на гравитацию предметов",
+      "levels": [
+        "Низкая",
+        "Обычная",
+        "Высокая",
+        "Предметы, которые выкинул игрок, летят +- 20 блоков\n(лук странно работает)"
+      ],
+      "icon": "textures/gui/icons/gravity.png",
+      "levelIcons": [
+        "textures/gui/icons/gravity/1.png",
+        "textures/gui/icons/gravity/2.png",
+        "textures/gui/icons/gravity/3.png",
+        "textures/gui/icons/gravity/4.png"
+      ]
+    }
+  ]
+}
